@@ -1,25 +1,71 @@
-import React from 'react';
+import React, {Component} from 'react';
+import Feed from './components/Feed';
 
-const BemVindo = (props) =>{
-    return(
+class App extends Component{
 
-        <div>
-            <h2>Bem vindo {props.nome}</h2>
-        </div>
-    )
+    constructor(props){
+        super(props);
+        this.state = {
+            nome:'',
+            email: '',
+            senha: '',
+            error:''
+           
+        }
 
-} 
-
-function App(){
-    return(
-     <div>
-         ola mundo
-         <BemVindo nome ="Mateus"/>
-
-         <h1>curso react</h1>
+        this.cadastrar = this.cadastrar.bind(this)
         
-    </div>
-    );
+    }
+
+    cadastrar(event) {
+        const {nome, email,senha} = this.state;
+
+        if(nome !== '' && email!== '' && senha !== '' ){
+            alert(`Nome ${nome} \nEmail: ${email} \nSenha: ${senha}`)
+        }else{
+
+            this.setState({error:'ops, parece que está faltando algo'})
+
+        }
+        
+
+        event.preventDefault();
+    }
+
+    
+    
+    
+     render() {
+        return (
+            <div> 
+
+                    <h1>Novo Usuário</h1>
+                    {this.state.error && <p>{this.state.error}</p>}
+
+                    <form onSubmit={this.cadastrar}>
+                        <label>Nome:</label>
+                        <input type="text" value={this.state.nome} 
+                        onChange={(evento)=> this.setState({nome: evento.target.value})}/>
+                        <br/>
+
+                        <label>Email: </label>
+
+                        <input type="email" value={this.state.email}
+                        onChange={(evento) => this.setState({email: evento.target.value})}/>
+                        <br/>
+
+                        <label>Senha:</label>
+
+                          <input type="password" value={this.state.senha}
+                          onChange={(evento) => this.setState({senha: evento.target.value})}/>
+                          <br/>
+
+                          <button type="submit">Cadastrar</button>
+                   </form>
+
+            </div>
+        );
+    }
 }
 
 export default App;
